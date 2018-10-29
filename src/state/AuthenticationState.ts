@@ -1,19 +1,17 @@
-import {action, observable} from "mobx";
+import {action} from "mobx";
 import bind from "bind-decorator";
 
 import { ConfigurationService } from "../services/ConfigurationService";
-import {USER_LOGGED_IN} from "../constants/LocalStorageConstants";
 
+/**
+ * TODO: REFACTOR TO SERVICE
+ */
 export class AuthenticationState {
 
   private readonly configService: ConfigurationService;
 
-  @observable
-  public loggedIn: boolean;
-
   constructor(configService: ConfigurationService) {
     this.configService = configService;
-    this.loggedIn = false;
   }
 
   @bind
@@ -26,13 +24,6 @@ export class AuthenticationState {
   @action
   public redirectToRemoteLogout() {
     window.location.href = this.configService.getServiceUrl() + "/authentication/logout";
-  }
-
-  @bind
-  @action
-  public updateLoggedIn(loggedIn: boolean) {
-    this.loggedIn = loggedIn;
-    localStorage.setItem(USER_LOGGED_IN, loggedIn ? "true" : "false");
   }
 
 }

@@ -3,6 +3,7 @@ import {inject, observer} from "mobx-react";
 
 import {LoginPageProps} from "../../definitions/PageProps";
 import {Redirect} from "react-router";
+import {USER_LOGGED_IN} from "../../constants/LocalStorageConstants";
 
 @inject("stateRegistry")
 @observer
@@ -13,21 +14,18 @@ export class LoginPage extends React.Component<LoginPageProps> {
   }
 
   componentDidMount() {
-    const { authenticationState } = this.props.stateRegistry;
-    console.log(this.props);
     if (this.props.match.params.status === "success") {
-      authenticationState.updateLoggedIn(true);
+      localStorage.setItem(USER_LOGGED_IN, "true");
       return;
     }
-    else {
-      authenticationState.redirectToRemoteLogin();
-    }
+    const { authenticationState } = this.props.stateRegistry;
+    authenticationState.redirectToRemoteLogin();
   }
 
   render() {
-    const { authenticationState } = this.props.stateRegistry;
+    const loggedInSuccessfully = this.props.match.params.status === "success";
     return (
-      authenticationState.loggedIn ? <Redirect to={"/student-status"}/> : <p>You shouldn't see this</p>
+      loggedInSuccessfully ? <Redirect to={"/student-status"}/> : <p>You shouldn't see this</p>
     );
   }
 
