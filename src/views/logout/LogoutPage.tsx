@@ -6,7 +6,7 @@ import {Redirect} from "react-router";
 
 @inject("stateRegistry")
 @observer
-export class LoginPage extends React.Component<LoginPageProps> {
+export class LogoutPage extends React.Component<LoginPageProps> {
 
   constructor(props: LoginPageProps) {
     super(props);
@@ -14,20 +14,19 @@ export class LoginPage extends React.Component<LoginPageProps> {
 
   componentDidMount() {
     const { authenticationState } = this.props.stateRegistry;
-    console.log(this.props);
     if (this.props.match.params.status === "success") {
-      authenticationState.updateLoggedIn(true);
+      authenticationState.updateLoggedIn(false);
       return;
     }
     else {
-      authenticationState.redirectToRemoteLogin();
+      authenticationState.redirectToRemoteLogout();
     }
   }
 
   render() {
     const { authenticationState } = this.props.stateRegistry;
     return (
-      authenticationState.loggedIn ? <Redirect to={"/student-status"}/> : <p>You shouldn't see this</p>
+      !authenticationState.loggedIn ? <Redirect to="/"/> : <p>You shouldn't see this</p>
     );
   }
 

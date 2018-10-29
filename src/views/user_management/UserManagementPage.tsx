@@ -1,13 +1,13 @@
 import React from "react";
-import { inject, observer } from "mobx-react";
+import {inject, observer} from "mobx-react";
 
-import { PageProps } from "../../definitions/PageProps";
+import {PagePropsGeneric} from "../../definitions/PageProps";
 
 @inject("stateRegistry")
 @observer
-export class UserManagementPage extends React.Component<PageProps> {
+export class UserManagementPage extends React.Component<PagePropsGeneric> {
 
-  constructor(props: PageProps) {
+  constructor(props: PagePropsGeneric) {
     super(props);
   }
 
