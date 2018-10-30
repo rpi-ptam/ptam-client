@@ -3,7 +3,7 @@ import {inject, observer} from "mobx-react";
 
 import {PagePropsGeneric} from "../../definitions/PageProps";
 
-@inject("stateRegistry")
+@inject("stateRegistry", "serviceRegistry")
 @observer
 export class StudentStatusPage extends React.Component<PagePropsGeneric> {
 

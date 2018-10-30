@@ -3,9 +3,8 @@ import {inject, observer} from "mobx-react";
 
 import {LoginPageProps} from "../../definitions/PageProps";
 import {Redirect} from "react-router";
-import {USER_LOGGED_IN} from "../../constants/LocalStorageConstants";
 
-@inject("stateRegistry")
+@inject("stateRegistry", "serviceRegistry")
 @observer
 export class LogoutPage extends React.Component<LoginPageProps> {
 
@@ -14,18 +13,20 @@ export class LogoutPage extends React.Component<LoginPageProps> {
   }
 
   componentDidMount() {
+    const { authenticationState } = this.props.stateRegistry;
+    const { authenticationService } = this.props.serviceRegistry;
     if (this.props.match.params.status === "success") {
-      localStorage.setItem(USER_LOGGED_IN, "false");
+      authenticationState.updateAuthenticationStatus(false);
+      authenticationState.updateUser(null);
       return;
     }
-    const { authenticationState } = this.props.stateRegistry;
-    authenticationState.redirectToRemoteLogout();
+    authenticationService.redirectToRemoteLogout();
   }
 
   render() {
-    const loggedOutSuccessfully = this.props.match.params.status === "success";
+    const { authenticationState } = this.props.stateRegistry;
     return (
-      loggedOutSuccessfully ? <Redirect to="/"/> : <p>You shouldn't see this</p>
+      authenticationState.isAuthenticated ? <Redirect to="/"/> : <p>You shouldn't see this</p>
     );
   }
 
