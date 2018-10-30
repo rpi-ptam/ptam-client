@@ -26,7 +26,7 @@ export class LoginPage extends React.Component<LoginPageProps> {
   render() {
     const { authenticationState } = this.props.stateRegistry;
     return (
-      authenticationState.isAuthenticated ? <Redirect to={"/student-status"}/> : <p>You shouldn't see this</p>
+      authenticationState.isAuthenticated ? <Redirect to={"/"}/> : <p>You shouldn't see this</p>
     );
   }
 

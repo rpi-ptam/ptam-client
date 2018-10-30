@@ -10,10 +10,28 @@
   .logo {
     height: 50px;
   }
+  a {
+    color: @white;
+    text-decoration: none;
+    &:hover {
+      color: @gray-light;
+    }
+  }
   p {
     margin-bottom: 0;
   }
   .navigation-content {
     margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    a {
+      margin-right: 20px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }

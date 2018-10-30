@@ -23,7 +23,7 @@ export class ServiceRegistry {
     this.stateRegistry = stateRegistry;
     this.configService = new ConfigurationService();
 
-    this.appealsService = new AppealsService(this.configService);
+    this.appealsService = new AppealsService(this.configService, this.stateRegistry);
     this.authenticationService = new AuthenticationService(this.configService, this.stateRegistry);
     this.lotsService = new LotsService(this.configService);
     this.statesService = new StatesService(this.configService);
