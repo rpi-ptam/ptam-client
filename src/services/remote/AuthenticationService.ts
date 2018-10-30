@@ -36,7 +36,6 @@ export class AuthenticationService {
     const selfEndpointUrl = this.configService.getServiceUrl() + "/users/self/get";
     const response = await axios.get(selfEndpointUrl, { withCredentials: true });
     authenticationState.updateUser(response.data.user);
-    localStorage.setItem(USER_INFO, JSON.stringify(response.data.user));
   }
 
 

@@ -1,6 +1,7 @@
-import { StateRegistry } from "../registries/StateRegistry";
 import { RouteComponentProps } from "react-router";
-import {ServiceRegistry} from "../registries/ServiceRegistry";
+
+import { StateRegistry } from "../registries/StateRegistry";
+import { ServiceRegistry } from "../registries/ServiceRegistry";
 
 export interface StatefulComponentProps {
    stateRegistry: StateRegistry,

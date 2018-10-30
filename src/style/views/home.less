@@ -1,3 +1,54 @@
 #homePage {
-
+  width: 100%;
+  h3 {
+    color: @gray-dark;
+    font-weight: 200;
+    margin-bottom: 30px;
+    margin-top: 0;
+  }
+  h4 {
+    color: @gray;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  h5 {
+    color: @gray;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  b {
+    font-weight: 500;
+  }
+  .indent {
+    margin: 0 25px;
+  }
+  .card {
+    background: @white;
+    border-radius: 3px;
+    border: 1px solid @white;
+    padding: 60px 60px;
+  }
+  @media @desktop, @tablet {
+    .card {
+      margin: 60px 25px;
+      &:first-child {
+        margin-left: 60px;
+      }
+      &:last-child {
+        margin-right: 60px;
+      }
+    }
+  }
+  @media @mobile {
+    .card {
+      margin: 60px 0;
+    }
+  }
+  ul {
+    li {
+      list-style-type: square;
+      margin-bottom: 10px;
+      margin-left: 15px;
+    }
+  }
 }

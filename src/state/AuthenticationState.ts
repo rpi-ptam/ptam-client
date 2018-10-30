@@ -1,7 +1,7 @@
 import {action, observable} from "mobx";
 import bind from "bind-decorator";
 
-import { USER_LOGGED_IN } from "../constants/LocalStorageConstants";
+import {USER_INFO, USER_LOGGED_IN} from "../constants/LocalStorageConstants";
 import {User} from "../definitions/types/User";
 
 export class AuthenticationState {
@@ -28,6 +28,7 @@ export class AuthenticationState {
   @action
   public updateUser(user: User | null) {
     this.user = user;
+    user ? localStorage.setItem(USER_INFO, JSON.stringify(user)) : localStorage.removeItem(USER_INFO);
   }
 
 }
