@@ -13,7 +13,7 @@ export class AppealsTable extends React.Component<AppealsTableProps> {
     const tableItems = appeals.map(appeal => <AppealTableItem appeal={appeal} key={appeal.appeal.id}/>);
     return (
       <div className="appeals-table">
-        <div className="appeal-table-item">
+        <div className="appeal-table-item header">
           <h4>Appeal Number</h4>
           <h4>Ticket Number</h4>
           <h4>Ticketed On</h4>

@@ -1,19 +1,32 @@
 import React from "react";
 import {inject, observer} from "mobx-react";
 
-import {PagePropsGeneric} from "../../definitions/PageProps";
+import { DecideAppealPageProps } from "../../definitions/PageProps";
 
 @inject("stateRegistry", "serviceRegistry")
 @observer
-export class DecideAppealPage extends React.Component<PagePropsGeneric> {
+export class DecideAppealPage extends React.Component<DecideAppealPageProps> {
 
-  constructor(props: PagePropsGeneric) {
+  constructor(props: DecideAppealPageProps) {
     super(props);
   }
 
   render() {
     return (
-      <div>Decide Appeals</div>
+      <div className="container" id="decideAppealPage">
+        <div className="columns wrapper">
+          <div className="column is-full-mobile is-two-thirds-fullhd">
+            <div className="card">
+              <h2>Appeal #{this.props.match.params.appealId}</h2>
+            </div>
+          </div>
+          <div className="column">
+            <div className="card">
+              <h1>HERRRO</h1>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 

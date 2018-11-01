@@ -34,7 +34,7 @@ export class ApplicationRouter extends React.Component<StatefulComponentProps> {
       <BrowserRouter>
         <div>
           <NavigationBar serviceRegistry={this.props.serviceRegistry} stateRegistry={this.props.stateRegistry}/>
-          <AuthenticatedRoute isAuthenticated={isAuthenticated} path="/decide-appeal" component={DecideAppealPage}/>
+          <AuthenticatedRoute isAuthenticated={isAuthenticated} path="/decide-appeal/:appealId" component={DecideAppealPage}/>
           <AuthenticatedRoute isAuthenticated={isAuthenticated} path="/file-appeal" component={FileAppealPage}/>
           <AuthenticatedRoute isAuthenticated={isAuthenticated} path="/file-ticket" component={FileTicketPage}/>
           <AuthenticatedRoute isAuthenticated={isAuthenticated} path="/student-status" component={StudentStatusPage}/>

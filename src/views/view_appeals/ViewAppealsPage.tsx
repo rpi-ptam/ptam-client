@@ -8,8 +8,6 @@ import {AppealsTable} from "../../components/tables/AppealsTable";
 @observer
 export class ViewAppealsPage extends React.Component<PagePropsGeneric> {
 
-  private verdicts: Array<string> | undefined;
-
   constructor(props: PagePropsGeneric) {
     super(props);
   }
@@ -79,7 +77,6 @@ export class ViewAppealsPage extends React.Component<PagePropsGeneric> {
           <span className="button">Closed Appeals</span>
         </div>
         <AppealsTable appeals={viewAppealsState.currentlyViewedAppeals}/>
-        { this.verdicts ? this.verdicts.join(" ") : "none" }
       </div>
     )
   }

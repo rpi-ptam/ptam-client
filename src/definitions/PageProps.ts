@@ -17,8 +17,13 @@ export interface PageProps<T> extends RouteComponentProps<T> {
 
 export interface PagePropsGeneric extends PageProps<{}> {}
 
-export type LoginProps = {
+type LoginProps = {
   status?: string
 }
 
+type DecideAppealProps = {
+  appealId: number
+}
+
 export type LoginPageProps = PageProps<LoginProps>;
+export type DecideAppealPageProps = PageProps<DecideAppealProps>;
