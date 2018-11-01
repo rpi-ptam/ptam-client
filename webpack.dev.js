@@ -8,6 +8,7 @@ module.exports = merge(common, {
   devtool: "source-map",
   devServer: {
     contentBase: './src',
+    port: 8081,
     historyApiFallback: true
   },
   module: {

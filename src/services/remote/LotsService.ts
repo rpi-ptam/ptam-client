@@ -1,4 +1,6 @@
 import { ConfigurationService } from "../ConfigurationService";
+import bind from "bind-decorator";
+import axios from "axios";
 
 export class LotsService {
 
@@ -6,7 +8,13 @@ export class LotsService {
 
   constructor(configService: ConfigurationService) {
     this.configService = configService;
-    void (this.configService);
+  }
+
+  @bind
+  public async fetchLotsEnum(): Promise<Array<string>> {
+    const lotsEndpointUrl = this.configService.getServiceUrl() + "/lots/get";
+    const response = await axios.get(lotsEndpointUrl, { withCredentials: true });
+    return response.data.lots;
   }
 
 }

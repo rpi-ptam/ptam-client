@@ -3,7 +3,7 @@ import bind from "bind-decorator";
 
 import { ConfigurationService } from "../ConfigurationService";
 
-export class StatesService {
+export class VerdictsService {
 
   private readonly configService: ConfigurationService;
 
@@ -12,10 +12,10 @@ export class StatesService {
   }
 
   @bind
-  public async fetchStates(): Promise<Array<string>> {
-    const lotsEndpointUrl = this.configService.getServiceUrl() + "/states/get";
-    const response = await axios.get(lotsEndpointUrl, { withCredentials: true });
-    return response.data.states;
+  public async fetchVerdicts(): Promise<Array<string>> {
+    const verdictsEndpointUrl = this.configService.getServiceUrl() + "/verdicts/get";
+    const response = await axios.get(verdictsEndpointUrl, { withCredentials: true });
+    return response.data.verdicts;
   }
 
 }

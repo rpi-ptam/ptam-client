@@ -1,0 +1,1 @@
+export const VIEW_APPEALS_APPEALS_PER_PAGE = 25;

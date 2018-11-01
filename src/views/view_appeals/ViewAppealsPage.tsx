@@ -2,10 +2,13 @@ import React from "react";
 import {inject, observer} from "mobx-react";
 
 import {PagePropsGeneric} from "../../definitions/PageProps";
+import {AppealsTable} from "../../components/tables/AppealsTable";
 
-@inject("stateRegistry", "serviceRegistry")
+@inject("stateRegistry", "serviceRegistry", "cacheRegistry")
 @observer
 export class ViewAppealsPage extends React.Component<PagePropsGeneric> {
+
+  private verdicts: Array<string> | undefined;
 
   constructor(props: PagePropsGeneric) {
     super(props);
@@ -13,7 +16,9 @@ export class ViewAppealsPage extends React.Component<PagePropsGeneric> {
 
   async componentDidMount() {
     const { appealsService } = this.props.serviceRegistry;
+    const { viewAppealsState } = this.props.stateRegistry;
     await appealsService.fetchStatistics();
+    await appealsService.fetchAppealsBulk(viewAppealsState.currentAppealsPageIndex);
   }
 
   render() {
@@ -29,32 +34,34 @@ export class ViewAppealsPage extends React.Component<PagePropsGeneric> {
           </div>
           <div className="column is-full-mobile">
             <div className="statistic">
+              <h3>Appeals</h3>
               <div className="inline-stat">
-                <h4>Appeals This Week</h4>
+                <h4>This Week</h4>
                 <h5>{viewAppealsState.statistics && viewAppealsState.statistics.appeals_this_week}</h5>
               </div>
               <div className="inline-stat">
-                <h4>Appeals This Month</h4>
+                <h4>This Month</h4>
                 <h5>{viewAppealsState.statistics && viewAppealsState.statistics.appeals_this_month}</h5>
               </div>
               <div className="inline-stat">
-                <h4>Appeals This Year</h4>
+                <h4>This Year</h4>
                 <h5>{viewAppealsState.statistics && viewAppealsState.statistics.appeals_this_year}</h5>
               </div>
             </div>
           </div>
           <div className="column is-full-mobile">
             <div className="statistic">
+              <h3>Appeals Reviewed</h3>
               <div className="inline-stat">
-                <h4>Appeals Reviewed This Week</h4>
+                <h4>This Week</h4>
                 <h5>{viewAppealsState.statistics && viewAppealsState.statistics.appeals_reviewed_this_week}</h5>
               </div>
               <div className="inline-stat">
-                <h4>Appeals Reviewed This Month</h4>
+                <h4>This Month</h4>
                 <h5>{viewAppealsState.statistics && viewAppealsState.statistics.appeals_reviewed_this_month}</h5>
               </div>
               <div className="inline-stat">
-                <h4>Appeals Reviewed This Year</h4>
+                <h4>This Year</h4>
                 <h5>{viewAppealsState.statistics && viewAppealsState.statistics.appeals_reviewed_this_year}</h5>
               </div>
             </div>
@@ -71,6 +78,8 @@ export class ViewAppealsPage extends React.Component<PagePropsGeneric> {
           <span className="button">All Appeals</span>
           <span className="button">Closed Appeals</span>
         </div>
+        <AppealsTable appeals={viewAppealsState.currentlyViewedAppeals}/>
+        { this.verdicts ? this.verdicts.join(" ") : "none" }
       </div>
     )
   }

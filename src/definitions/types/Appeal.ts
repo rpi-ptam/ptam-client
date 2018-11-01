@@ -6,5 +6,6 @@ export type Appeal = {
   verdict_id?: number,
   verdict_comment?: string,
   reviewed_by?: number,
-  reviewed_at?: string
+  reviewed_at?: string,
+  verdict?: string
 };

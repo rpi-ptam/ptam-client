@@ -5,7 +5,9 @@ import { LotsService } from "../services/remote/LotsService";
 import { StatesService } from "../services/remote/StatesService";
 import { UsersService } from "../services/remote/UsersService";
 import { TicketsService } from "../services/remote/TicketsService";
-import {StateRegistry} from "./StateRegistry";
+import { StateRegistry } from "./StateRegistry";
+import { VerdictsService } from "../services/remote/VerdictsService";
+import { ViolationTypesService } from "../services/remote/ViolationTypesService";
 
 export class ServiceRegistry {
 
@@ -18,6 +20,8 @@ export class ServiceRegistry {
   public readonly statesService: StatesService;
   public readonly ticketsService: TicketsService;
   public readonly usersService: UsersService;
+  public readonly verdictsService: VerdictsService;
+  public readonly violationTypesService: ViolationTypesService;
 
   constructor(stateRegistry: StateRegistry) {
     this.stateRegistry = stateRegistry;
@@ -29,6 +33,8 @@ export class ServiceRegistry {
     this.statesService = new StatesService(this.configService);
     this.ticketsService = new TicketsService(this.configService);
     this.usersService = new UsersService(this.configService, this.stateRegistry);
+    this.verdictsService = new VerdictsService(this.configService);
+    this.violationTypesService = new ViolationTypesService(this.configService);
   }
 
 }

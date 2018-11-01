@@ -2,6 +2,7 @@ import { ConfigurationService } from "../ConfigurationService";
 import {StateRegistry} from "../../registries/StateRegistry";
 import bind from "bind-decorator";
 import axios from "axios";
+import {VIEW_APPEALS_APPEALS_PER_PAGE} from "../../constants/ViewConstants";
 
 export class AppealsService {
 
@@ -22,6 +23,20 @@ export class AppealsService {
     const statisticsUrlEndpoint = this.configService.getServiceUrl() + "/appeals/statistics/get";
     const response = await axios.get(statisticsUrlEndpoint, { withCredentials: true });
     viewAppealsState.updateStatistics(response.data.statistics);
+  }
+
+  @bind
+  public async fetchAppealsBulk(pageNumber: number, decided?: boolean) {
+    const { viewAppealsState } = this.stateRegistry;
+
+    const bulkEndpointUrl = this.configService.getServiceUrl() + "/appeals/bulk/get";
+    const params = {
+      start: pageNumber * VIEW_APPEALS_APPEALS_PER_PAGE,
+      count: VIEW_APPEALS_APPEALS_PER_PAGE,
+      decided
+    };
+    const response = await axios.get(bulkEndpointUrl, { withCredentials: true, params });
+    viewAppealsState.updateCurrentlyViewedAppeals(response.data.appeals);
   }
 
 }

@@ -1,0 +1,26 @@
+.appeals-table {
+  background: @white;
+  margin: 0 50px;
+  border-radius: 3px;
+  padding: 30px 40px;
+  .appeal-table-item {
+    a {
+      color: @rpi-red-faded;
+      text-decoration: none;
+      &:hover {
+        color: @rpi-red;
+      }
+    }
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid @gray-light;
+    margin-top: 20px;
+    h4 {
+      flex: 1;
+      font-size: 1em;
+    }
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+}
