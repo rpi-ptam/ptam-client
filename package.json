@@ -9,12 +9,14 @@
     "mobx-react": "^5.2.8",
     "moment": "^2.22.2",
     "react": "^16.5.2",
+    "react-datepicker": "^1.7.0",
     "react-dom": "^16.5.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
     "@types/react": "^16.4.16",
+    "@types/react-datepicker": "^1.1.7",
     "@types/react-dom": "^16.0.9",
     "@types/react-router-dom": "^4.3.1",
     "awesome-typescript-loader": "^5.2.1",
