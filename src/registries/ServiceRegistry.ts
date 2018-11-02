@@ -31,7 +31,7 @@ export class ServiceRegistry {
     this.authenticationService = new AuthenticationService(this.configService, this.stateRegistry);
     this.lotsService = new LotsService(this.configService);
     this.statesService = new StatesService(this.configService);
-    this.ticketsService = new TicketsService(this.configService);
+    this.ticketsService = new TicketsService(this.configService, this.stateRegistry);
     this.usersService = new UsersService(this.configService, this.stateRegistry);
     this.verdictsService = new VerdictsService(this.configService);
     this.violationTypesService = new ViolationTypesService(this.configService);

@@ -3,7 +3,6 @@ import moment from "moment";
 import React from "react";
 import {CacheRegistry} from "../../registries/CacheRegistry";
 import bind from "bind-decorator";
-import {TICKET_PAYLOAD} from "../../constants/PayloadDefinitions";
 
 export class FileTicketState {
 
@@ -25,6 +24,9 @@ export class FileTicketState {
   @observable
   public readonly violationOptions: Array<JSX.Element>;
 
+  @observable
+  public submittedTicketId?: number;
+
   public readonly ticket: any;
 
   constructor() {
@@ -38,31 +40,23 @@ export class FileTicketState {
     this.violationOptions = [<option key="default" value="default">Violation</option>];
   }
 
-  private validateFields() {
-    this.invalidFields = [];
-    for(let i=0; i< TICKET_PAYLOAD.length; i++) {
-      if (!this.ticket.hasOwnProperty(TICKET_PAYLOAD[i])) {
-        this.invalidFields.push(TICKET_PAYLOAD[i]);
-      }
-    }
+  @bind
+  @action
+  public updateSubmittedTicketId(ticketId: number) {
+    this.submittedTicketId = ticketId;
   }
+
 
   @bind
   @action
-  private updateSubmitting(submitting: boolean): void {
+  public updateSubmitting(submitting: boolean): void {
     this.isSubmitting = submitting;
   }
 
   @bind
   @action
-  public async submit() {
-    console.log("validating fields");
-    this.validateFields();
-    console.log("validated fields", this.invalidFields.join(", "));
-    if (this.invalidFields.length > 0) return;
-    this.updateSubmitting(true);
-    // TODO: submit
-    this.updateSubmitting(false);
+  public updateInvalidFields(invalidFields: Array<string>): void {
+    this.invalidFields = invalidFields;
   }
 
   @bind

@@ -25,5 +25,10 @@ type DecideAppealProps = {
   appealId: number
 }
 
+type FileAppealProps = {
+  ticketId: number
+}
+
 export type LoginPageProps = PageProps<LoginProps>;
 export type DecideAppealPageProps = PageProps<DecideAppealProps>;
+export type FileAppealPageProps = PageProps<FileAppealProps>;

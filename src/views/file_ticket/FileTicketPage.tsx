@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import {PagePropsGeneric} from "../../definitions/PageProps";
 import moment from "moment";
 import bind from "bind-decorator";
+import {Redirect} from "react-router";
 
 @inject("stateRegistry", "serviceRegistry", "cacheRegistry")
 @observer
@@ -19,6 +20,13 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
   }
 
   @bind
+  private async submitCreateTicket(): Promise<void> {
+    const { fileTicketState } =this.props.stateRegistry;
+    const { ticketsService } = this.props.serviceRegistry;
+    await ticketsService.submitCreateTicket(fileTicketState.ticket);
+  }
+
+  @bind
   private onFieldChange(field: string, event: React.ChangeEvent<HTMLInputElement>) {
     const { fileTicketState } =this.props.stateRegistry;
     fileTicketState.updateTicketField(field, event.target.value);
@@ -26,6 +34,9 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
 
   render() {
     const { fileTicketState } = this.props.stateRegistry;
+    if (fileTicketState.submittedTicketId) {
+      return (<Redirect to={`/file-appeal/${fileTicketState.submittedTicketId}`}/>);
+    }
     return (
       <div id="fileTicketPage" className="container">
         <div className="columns">
@@ -105,7 +116,7 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
                   </span>
                 </p>
               </div>
-              <button className="button" onClick={fileTicketState.submit}>Continue</button>
+              <button className="button" onClick={this.submitCreateTicket}>Continue</button>
             </div>
           </div>
           <div className="column">
