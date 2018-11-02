@@ -3,6 +3,7 @@ import {inject, observer} from "mobx-react";
 import DatePicker from "react-datepicker";
 import {PagePropsGeneric} from "../../definitions/PageProps";
 import moment from "moment";
+import bind from "bind-decorator";
 
 @inject("stateRegistry", "serviceRegistry", "cacheRegistry")
 @observer
@@ -17,6 +18,12 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
     await fileTicketState.fillCaches(this.props.cacheRegistry);
   }
 
+  @bind
+  private onFieldChange(field: string, event: React.ChangeEvent<HTMLInputElement>) {
+    const { fileTicketState } =this.props.stateRegistry;
+    fileTicketState.updateTicketField(field, event.target.value);
+  }
+
   render() {
     const { fileTicketState } = this.props.stateRegistry;
     return (
@@ -29,7 +36,7 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
                 <div className="field column">
                   <label className="label">Ticket Number</label>
                   <div className="control">
-                    <input className="input" type="text"/>
+                    <input className={fileTicketState.getInputClass("external_id")} onChange={this.onFieldChange.bind(this, "external_id")} type="text"/>
                   </div>
                 </div>
                 <div className="column field">
@@ -42,7 +49,7 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
               <div className="field">
                 <label className="label">Violation</label>
                 <p className="control">
-                  <span className="select">
+                  <span className={fileTicketState.getSelectClass("violation")} onChange={this.onFieldChange.bind(this, "violation")}>
                     <select>
                       {fileTicketState.violationOptions}
                     </select>
@@ -53,13 +60,13 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
                 <div className="column field">
                   <label className="label">Vehicle Make</label>
                   <div className="control">
-                    <input className="input" type="text"/>
+                    <input className={fileTicketState.getInputClass("make")} onChange={this.onFieldChange.bind(this, "make")} type="text"/>
                   </div>
                 </div>
                 <div className="column field">
                   <label className="label">Vehicle Model</label>
                   <div className="control">
-                    <input className="input" type="text"/>
+                    <input className={fileTicketState.getInputClass("model")} onChange={this.onFieldChange.bind(this, "model")} type="text"/>
                   </div>
                 </div>
               </div>
@@ -67,13 +74,13 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
                 <div className="column field">
                   <label className="label">License Plate</label>
                   <div className="control">
-                    <input className="input" type="text"/>
+                    <input className={fileTicketState.getInputClass("tag")} onChange={this.onFieldChange.bind(this, "tag")} type="text"/>
                   </div>
                 </div>
                 <div className="column field">
                   <label className="label">Registration State</label>
                   <p className="control">
-                  <span className="select">
+                  <span className={fileTicketState.getSelectClass("plate_state")} onChange={this.onFieldChange.bind(this, "plate_state")}>
                     <select>
                       {fileTicketState.statesOptions}
                     </select>
@@ -84,20 +91,21 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
               <div className="field">
                 <label className="label">Fine Amount</label>
                 <p className="control has-icons-left">
-                  <input className="input" type="text" placeholder="100.00"/>
+                  <input className={fileTicketState.getInputClass("amount")} onChange={this.onFieldChange.bind(this, "amount")} type="text" placeholder="100.00"/>
                   <span className="icon is-left">$</span>
                 </p>
               </div>
               <div className="field">
                 <label className="label">Parking Lot</label>
                 <p className="control">
-                  <span className="select">
+                  <span className={fileTicketState.getSelectClass("lot")} onChange={this.onFieldChange.bind(this, "lot")}>
                     <select>
                       {fileTicketState.lotsOptions}
                     </select>
                   </span>
                 </p>
               </div>
+              <button className="button" onClick={fileTicketState.submit}>Submit</button>
             </div>
           </div>
           <div className="column">
