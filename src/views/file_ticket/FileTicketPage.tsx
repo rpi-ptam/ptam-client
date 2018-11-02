@@ -105,12 +105,16 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
                   </span>
                 </p>
               </div>
-              <button className="button" onClick={fileTicketState.submit}>Submit</button>
+              <button className="button" onClick={fileTicketState.submit}>Continue</button>
             </div>
           </div>
           <div className="column">
             <div className="card">
-              <h2>Instructions</h2>
+              <progress className="progress" value="33" max="100"/>
+              <h4>Appeal Process</h4>
+              <h5>1.<span>File Ticket</span></h5>
+              <h5>2.<span>File Appeal</span></h5>
+              <h5>3.<span>Decision Rendered</span></h5>
             </div>
           </div>
         </div>

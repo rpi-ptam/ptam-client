@@ -22,7 +22,6 @@ export class DecideAppealPage extends React.Component<DecideAppealPageProps> {
           </div>
           <div className="column">
             <div className="card">
-              <h1>HERRRO</h1>
             </div>
           </div>
         </div>
