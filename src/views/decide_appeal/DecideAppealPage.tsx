@@ -3,7 +3,7 @@ import {inject, observer} from "mobx-react";
 
 import { DecideAppealPageProps } from "../../definitions/PageProps";
 
-@inject("stateRegistry", "serviceRegistry", "cacheRegistry")
+@inject("pageDependencies")
 @observer
 export class DecideAppealPage extends React.Component<DecideAppealPageProps> {
 
@@ -12,12 +12,12 @@ export class DecideAppealPage extends React.Component<DecideAppealPageProps> {
   }
 
   async componentDidMount() {
-    const { appealsService } = this.props.serviceRegistry;
-    await appealsService.fetchAppeal(this.props.match.params.appealId);
+    const { decideAppealController } = this.props.pageDependencies.controllerRegistry;
+    await decideAppealController.fetchAppeal(this.props.match.params.appealId);
   }
 
   render() {
-    const { decideAppealState } = this.props.stateRegistry;
+    const { decideAppealState } = this.props.pageDependencies.stateRegistry;
     if (decideAppealState.appealTicketPair === undefined) {
       return (<div/>);
     }

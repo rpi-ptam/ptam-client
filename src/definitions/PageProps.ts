@@ -1,18 +1,12 @@
 import { RouteComponentProps } from "react-router";
-
-import { StateRegistry } from "../registries/StateRegistry";
-import { ServiceRegistry } from "../registries/ServiceRegistry";
-import {CacheRegistry} from "../registries/CacheRegistry";
+import { PageDependencies } from "./PageDependencies";
 
 export interface StatefulComponentProps {
-  stateRegistry: StateRegistry,
-  serviceRegistry: ServiceRegistry
+  pageDependencies: PageDependencies
 }
 
 export interface PageProps<T> extends RouteComponentProps<T> {
-  stateRegistry: StateRegistry,
-  serviceRegistry: ServiceRegistry,
-  cacheRegistry: CacheRegistry
+  pageDependencies: PageDependencies
 }
 
 export interface PagePropsGeneric extends PageProps<{}> {}
@@ -29,6 +23,11 @@ type FileAppealProps = {
   ticketId: number
 }
 
+type ViewAppealsProps = {
+  pageNumber?: number;
+}
+
 export type LoginPageProps = PageProps<LoginProps>;
 export type DecideAppealPageProps = PageProps<DecideAppealProps>;
 export type FileAppealPageProps = PageProps<FileAppealProps>;
+export type ViewAppealsPageProps = PageProps<ViewAppealsProps>;

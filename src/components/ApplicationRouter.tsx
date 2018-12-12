@@ -13,8 +13,8 @@ import { LogoutPage } from "../views/logout/LogoutPage";
 import { LoginPage } from "../views/login/LoginPage";
 import { HomePage } from "../views/static/HomePage";
 
-import {NavigationBar} from "./navigation/NavigationBar";
-import {StatefulComponentProps} from "../definitions/PageProps";
+import { NavigationBar } from "./navigation/NavigationBar";
+import { StatefulComponentProps } from "../definitions/PageProps";
 
 export class ApplicationRouter extends React.Component<StatefulComponentProps> {
 
@@ -22,18 +22,18 @@ export class ApplicationRouter extends React.Component<StatefulComponentProps> {
     super(props);
   }
 
-  async componentWillMount() {
-    const { authenticationService } = this.props.serviceRegistry;
-    await authenticationService.hydrateAuthentication();
+  componentWillMount() {
+    const {authenticationController} = this.props.pageDependencies.controllerRegistry;
+    authenticationController.loadFromStorage();
   }
 
   render() {
-    const { authenticationState } = this.props.stateRegistry;
-    const { isAuthenticated } = authenticationState;
+    const {authenticationState} = this.props.pageDependencies.stateRegistry;
+    const {isAuthenticated} = authenticationState;
     return (
       <BrowserRouter>
         <div>
-          <NavigationBar serviceRegistry={this.props.serviceRegistry} stateRegistry={this.props.stateRegistry}/>
+          <NavigationBar {...this.props}/>
           <AuthenticatedRoute isAuthenticated={isAuthenticated} path="/decide-appeal/:appealId" component={DecideAppealPage}/>
           <AuthenticatedRoute isAuthenticated={isAuthenticated} path="/file-appeal/:ticketId" component={FileAppealPage}/>
           <AuthenticatedRoute isAuthenticated={isAuthenticated} path="/file-ticket" component={FileTicketPage}/>

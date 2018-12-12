@@ -1,26 +1,22 @@
 import React from "react";
 import {inject, observer} from "mobx-react";
 
-import {PagePropsGeneric} from "../../definitions/PageProps";
-import {AppealsTable} from "../../components/tables/AppealsTable";
+import { ViewAppealsPageProps } from "../../definitions/PageProps";
+import { AppealsTable } from "../../components/tables/AppealsTable";
 
-@inject("stateRegistry", "serviceRegistry", "cacheRegistry")
+@inject("pageDependencies")
 @observer
-export class ViewAppealsPage extends React.Component<PagePropsGeneric> {
-
-  constructor(props: PagePropsGeneric) {
-    super(props);
-  }
+export class ViewAppealsPage extends React.Component<ViewAppealsPageProps> {
 
   async componentDidMount() {
-    const { appealsService } = this.props.serviceRegistry;
-    const { viewAppealsState } = this.props.stateRegistry;
-    await appealsService.fetchStatistics();
-    await appealsService.fetchAppealsBulk(viewAppealsState.currentAppealsPageIndex);
+    const { controllerRegistry } = this.props.pageDependencies;
+    const { viewAppealsController } = controllerRegistry;
+    await viewAppealsController.fetchStatistics();
+    await viewAppealsController.fetchBulk(this.props.match.params.pageNumber || 1);
   }
 
   render() {
-    const { viewAppealsState } = this.props.stateRegistry;
+    const { viewAppealsState } = this.props.pageDependencies.stateRegistry;
     return (
       <div id="viewAppealsPage">
         <div className="columns statistics-row">
