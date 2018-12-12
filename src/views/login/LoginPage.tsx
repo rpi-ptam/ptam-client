@@ -1,10 +1,10 @@
 import React from "react";
-import {inject, observer} from "mobx-react";
+import { Redirect } from "react-router";
+import { inject, observer } from "mobx-react";
 
-import {LoginPageProps} from "../../definitions/PageProps";
-import {Redirect} from "react-router";
+import { LoginPageProps } from "../../definitions/PageProps";
 
-@inject("stateRegistry", "serviceRegistry")
+@inject("pageDependencies")
 @observer
 export class LoginPage extends React.Component<LoginPageProps> {
 
@@ -13,18 +13,16 @@ export class LoginPage extends React.Component<LoginPageProps> {
   }
 
   async componentDidMount() {
-    const { authenticationState } = this.props.stateRegistry;
-    const { authenticationService } = this.props.serviceRegistry;
+    const {authenticationController} = this.props.pageDependencies.controllerRegistry;
     if (this.props.match.params.status === "success") {
-      authenticationState.updateAuthenticationStatus(true);
-      await authenticationService.fetchSelf();
+      await authenticationController.fetchSelf();
       return;
     }
-    authenticationService.redirectToRemoteLogin();
+    authenticationController.redirectToLogin();
   }
 
   render() {
-    const { authenticationState } = this.props.stateRegistry;
+    const {authenticationState} = this.props.pageDependencies.stateRegistry;
     return (
       authenticationState.isAuthenticated ? <Redirect to={"/"}/> : <p>You shouldn't see this</p>
     );

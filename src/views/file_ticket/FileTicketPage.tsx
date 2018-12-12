@@ -1,39 +1,36 @@
 import React from "react";
-import {inject, observer} from "mobx-react";
-import DatePicker from "react-datepicker";
-import {PagePropsGeneric} from "../../definitions/PageProps";
 import moment from "moment";
 import bind from "bind-decorator";
-import {Redirect} from "react-router";
+import DatePicker from "react-datepicker";
 
-@inject("stateRegistry", "serviceRegistry", "cacheRegistry")
+import { Redirect } from "react-router";
+import { inject, observer } from "mobx-react";
+
+import { PagePropsGeneric } from "../../definitions/PageProps";
+
+@inject("pageDependencies")
 @observer
 export class FileTicketPage extends React.Component<PagePropsGeneric> {
 
-  constructor(props: PagePropsGeneric) {
-    super(props);
-  }
-
   async componentDidMount() {
-    const { fileTicketState } = this.props.stateRegistry;
-    await fileTicketState.fillCaches(this.props.cacheRegistry);
+    const { fileTicketController } = this.props.pageDependencies.controllerRegistry;
+    await fileTicketState.fillFormCaches();
   }
 
   @bind
   private async submitCreateTicket(): Promise<void> {
-    const { fileTicketState } =this.props.stateRegistry;
-    const { ticketsService } = this.props.serviceRegistry;
-    await ticketsService.submitCreateTicket(fileTicketState.ticket);
+    const { fileTicketController } = this.props.pageDependencies.controllerRegistry;
+    await fileTicketController.submit();
   }
 
   @bind
   private onFieldChange(field: string, event: React.ChangeEvent<HTMLInputElement>) {
-    const { fileTicketState } =this.props.stateRegistry;
+    const { fileTicketState } = this.props.pageDependencies.stateRegistry;
     fileTicketState.updateTicketField(field, event.target.value);
   }
 
   render() {
-    const { fileTicketState } = this.props.stateRegistry;
+    const { fileTicketState } = this.props.pageDependencies.stateRegistry;
     if (fileTicketState.submittedTicketId) {
       return (<Redirect to={`/file-appeal/${fileTicketState.submittedTicketId}`}/>);
     }
@@ -47,20 +44,23 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
                 <div className="field column">
                   <label className="label">Ticket Number</label>
                   <div className="control">
-                    <input className={fileTicketState.getInputClass("external_id")} onChange={this.onFieldChange.bind(this, "external_id")} type="text"/>
+                    <input className={fileTicketState.getInputClass("external_id")}
+                           onChange={this.onFieldChange.bind(this, "external_id")} type="text"/>
                   </div>
                 </div>
                 <div className="column field">
                   <label className="label">Ticket Issued</label>
                   <div className="control">
-                    <DatePicker maxDate={moment()} selected={fileTicketState.ticketIssueDate} onChange={fileTicketState.updateTicketIssueDate}/>
+                    <DatePicker maxDate={moment()} selected={fileTicketState.ticketIssueDate}
+                                onChange={fileTicketState.updateTicketIssueDate}/>
                   </div>
                 </div>
               </div>
               <div className="field">
                 <label className="label">Violation</label>
                 <p className="control">
-                  <span className={fileTicketState.getSelectClass("violation")} onChange={this.onFieldChange.bind(this, "violation")}>
+                  <span className={fileTicketState.getSelectClass("violation")}
+                        onChange={this.onFieldChange.bind(this, "violation")}>
                     <select>
                       {fileTicketState.violationOptions}
                     </select>
@@ -71,13 +71,15 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
                 <div className="column field">
                   <label className="label">Vehicle Make</label>
                   <div className="control">
-                    <input className={fileTicketState.getInputClass("make")} onChange={this.onFieldChange.bind(this, "make")} type="text"/>
+                    <input className={fileTicketState.getInputClass("make")}
+                           onChange={this.onFieldChange.bind(this, "make")} type="text"/>
                   </div>
                 </div>
                 <div className="column field">
                   <label className="label">Vehicle Model</label>
                   <div className="control">
-                    <input className={fileTicketState.getInputClass("model")} onChange={this.onFieldChange.bind(this, "model")} type="text"/>
+                    <input className={fileTicketState.getInputClass("model")}
+                           onChange={this.onFieldChange.bind(this, "model")} type="text"/>
                   </div>
                 </div>
               </div>
@@ -85,13 +87,15 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
                 <div className="column field">
                   <label className="label">License Plate</label>
                   <div className="control">
-                    <input className={fileTicketState.getInputClass("tag")} onChange={this.onFieldChange.bind(this, "tag")} type="text"/>
+                    <input className={fileTicketState.getInputClass("tag")}
+                           onChange={this.onFieldChange.bind(this, "tag")} type="text"/>
                   </div>
                 </div>
                 <div className="column field">
                   <label className="label">Registration State</label>
                   <p className="control">
-                  <span className={fileTicketState.getSelectClass("plate_state")} onChange={this.onFieldChange.bind(this, "plate_state")}>
+                  <span className={fileTicketState.getSelectClass("plate_state")}
+                        onChange={this.onFieldChange.bind(this, "plate_state")}>
                     <select>
                       {fileTicketState.statesOptions}
                     </select>
@@ -102,14 +106,16 @@ export class FileTicketPage extends React.Component<PagePropsGeneric> {
               <div className="field">
                 <label className="label">Fine Amount</label>
                 <p className="control has-icons-left">
-                  <input className={fileTicketState.getInputClass("amount")} onChange={this.onFieldChange.bind(this, "amount")} type="text" placeholder="100.00"/>
+                  <input className={fileTicketState.getInputClass("amount")}
+                         onChange={this.onFieldChange.bind(this, "amount")} type="text" placeholder="100.00"/>
                   <span className="icon is-left">$</span>
                 </p>
               </div>
               <div className="field">
                 <label className="label">Parking Lot</label>
                 <p className="control">
-                  <span className={fileTicketState.getSelectClass("lot")} onChange={this.onFieldChange.bind(this, "lot")}>
+                  <span className={fileTicketState.getSelectClass("lot")}
+                        onChange={this.onFieldChange.bind(this, "lot")}>
                     <select>
                       {fileTicketState.lotsOptions}
                     </select>

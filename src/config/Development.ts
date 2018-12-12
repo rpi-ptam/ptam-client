@@ -5,5 +5,8 @@ export const DevelopmentConfig: ApplicationConfiguration = {
     host: "localhost",
     port: 8080,
     secure: false
+  },
+  storage: {
+    superKey: "@RPI_PTAM"
   }
 };

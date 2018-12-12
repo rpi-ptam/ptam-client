@@ -6,7 +6,7 @@ import {MAXIMUM_APPEAL_JUSTIFICATION_LENGTH} from "../../constants/ViewConstants
 import bind from "bind-decorator";
 import {Redirect} from "react-router";
 
-@inject("stateRegistry", "serviceRegistry")
+@inject("pageDependencies")
 @observer
 export class FileAppealPage extends React.Component<FileAppealPageProps> {
 
@@ -16,19 +16,19 @@ export class FileAppealPage extends React.Component<FileAppealPageProps> {
 
   @bind
   private onJustificationChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    const { fileAppealState } = this.props.stateRegistry;
+    const { fileAppealState } = this.props.pageDependencies.stateRegistry;
     fileAppealState.updateJustification(event.target.value);
   }
 
   @bind
   private async onSubmit(): Promise<void> {
-    const { appealsService } = this.props.serviceRegistry;
+    const { fileAppealController } = this.props.pageDependencies.controllerRegistry;
     const ticketId = this.props.match.params.ticketId;
-    await appealsService.submitAppeal(ticketId);
+    await fileAppealController.submitAppeal(ticketId);
   }
 
   render() {
-    const { fileAppealState } = this.props.stateRegistry;
+    const { fileAppealState } = this.props.pageDependencies.stateRegistry;
     if (fileAppealState.submittedSuccess) {
       return (<Redirect to="/student-status"/>);
     }
